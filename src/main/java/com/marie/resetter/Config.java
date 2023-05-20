@@ -1,6 +1,7 @@
 package com.marie.resetter;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.*;
 
@@ -12,7 +13,7 @@ public class Config {
     private int minRam;
     private int maxRam;
 
-    private Config(File world, File serverJar, boolean useSeed, String seed, int minRam, int maxRam) {
+    public Config(File world, File serverJar, boolean useSeed, String seed, int minRam, int maxRam) {
         this.world = world;
         this.serverJar = serverJar;
         this.useSeed = useSeed;
@@ -45,27 +46,27 @@ public class Config {
         return this.maxRam;
     }
 
-    public static Config create(File world, File serverJar, boolean useSeed, String seed, int minRam, int maxRam) {
+    public Config save() {
         try {
             Resetter.configFile.createNewFile();
             Resetter.LOGGER.info("Config file created");
 
             //  write config to file
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
             BufferedWriter writer = new BufferedWriter(new FileWriter(Resetter.configFile));
 
-            Config config = new Config(world, serverJar, useSeed, seed, minRam, maxRam);
-            String json = gson.toJson(config);
+            String json = gson.toJson(this);
+
             writer.write(json);
             writer.close();
 
-            return config;
+            return this;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static Config load() {
+    public Config load() {
         try {
             // Read the config from the json file
             Gson gson = new Gson();

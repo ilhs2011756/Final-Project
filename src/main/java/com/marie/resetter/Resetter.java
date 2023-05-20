@@ -15,10 +15,11 @@ public class Resetter {
     private static Process serverProcess;
     public static void main(String[] args) {
         LOGGER.info("Starting Co-Op Resetter");
+        GUI gui = new GUI();
         if (configFile.exists()) {
-            config = Config.load();
+            config = config.load();
         } else {
-            config = Config.create(new File("placeholder"), new File("placeholder"), false, "placeholder", 4096, 4096);
+            config = new DefaultConfig();
         }
     }
 

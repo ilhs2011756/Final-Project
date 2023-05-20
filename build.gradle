@@ -1,6 +1,7 @@
 plugins {
     id 'com.github.johnrengelman.shadow' version '8.1.1' // shadow plugin to build the jar with APIs included
     id 'java'
+    id 'application'
 }
 
 group 'com.marie.resetter'
@@ -21,4 +22,14 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+application {
+    mainClass = 'com.marie.resetter.Resetter'
+}
+
+jar {
+    manifest {
+        attributes 'Multi-Release': 'true'
+    }
 }

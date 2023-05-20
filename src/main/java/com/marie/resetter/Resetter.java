@@ -1,26 +1,24 @@
 package com.marie.resetter;
 
-import com.google.gson.Gson;
-import com.marie.resetter.config.Config;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.*;
-import java.nio.file.Paths;
-import java.util.Properties;
-import java.util.Scanner;
+import java.io.File;
+import java.io.IOException;
 
 public class Resetter {
     public static Config config;
     public static File configFile = new File("config.json");
     public static final Logger LOGGER = LogManager.getLogger();
+    private static Runtime runtime = Runtime.getRuntime();
+    private static Process serverProcess;
     public static void main(String[] args) {
         LOGGER.info("Starting Co-Op Resetter");
         if (configFile.exists()) {
             config = Config.load();
         } else {
-            config = Config.create(new File("placeholder"), new File("placeholder"), false, "placeholder");
+            config = Config.create(new File("placeholder"), new File("placeholder"), false, "placeholder", 4096, 4096);
         }
     }
 
@@ -47,28 +45,13 @@ public class Resetter {
 //        return config;
 //    }
 
-    public static void reset(Config config) throws IOException {
-        Scanner sc = new Scanner(System.in);
-        Runtime runtime = Runtime.getRuntime();
-        String worldName = config.getWorld().toString();
-        File worldFile = new File(worldName);
-        String jar = config.getServerJar().toString();
-        try {
-            runtime.exec("java -Xms4096M -Xmx4096M -jar " + jar + ".jar --nogui");
-            if (worldFile.exists()) {
-                FileUtils.deleteDirectory(worldFile);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+    public static void reset() throws IOException {
+        if (serverProcess.isAlive()) {
+            serverProcess.destroy();
         }
-        while (true) {
-            System.out.println("Type 'reset' to reset and 'quit' to exit");
-            if (sc.nextLine().equalsIgnoreCase("reset")) {
-                System.out.println("Resetting...");
-            } else if (sc.nextLine().equalsIgnoreCase("quit")) {
-                System.out.println("I'm sorry, I either didn't understand or you exited");
-                break;
-            }
-        }
+        FileUtils.deleteDirectory(config.getWorld());
+        serverProcess = runtime.exec("java -Xms"+ config.getMinRam()
+                + "M -Xmx" + config.getMaxRam() + "M -jar "
+                + config.getServerJar().toString() + ".jar --nogui");
     }
 }

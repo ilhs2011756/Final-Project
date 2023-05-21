@@ -20,6 +20,7 @@ public class Config {
         this.seed = seed;
         this.minRam = minRam;
         this.maxRam = maxRam;
+        this.save();
     }
 
     public File getServerJar() {
@@ -46,23 +47,43 @@ public class Config {
         return this.maxRam;
     }
 
-    public Config save() {
+    public void setWorld(File world) {
+        this.world = world;
+    }
+
+    public void setServerJar(File serverJar) {
+        this.serverJar = serverJar;
+    }
+
+    public void setUseSeed(boolean useSeed) {
+        this.useSeed = useSeed;
+    }
+
+    public void setSeed(String seed) {
+        this.seed = seed;
+    }
+
+    public void setMinRam(int minRam) {
+        this.minRam = minRam;
+    }
+
+    public void setMaxRam(int maxRam) {
+        this.maxRam = maxRam;
+    }
+
+    public void save() {
         try {
             Resetter.configFile.createNewFile();
             Resetter.LOGGER.info("Config file created");
 
-            //  write config to file
+            // Write config to file
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             BufferedWriter writer = new BufferedWriter(new FileWriter(Resetter.configFile));
-
             String json = gson.toJson(this);
-
             writer.write(json);
             writer.close();
-
-            return this;
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
@@ -70,7 +91,7 @@ public class Config {
         try {
             // Read the config from the json file
             Gson gson = new Gson();
-            BufferedReader reader = new BufferedReader(new FileReader("config.json"));
+            BufferedReader reader = new BufferedReader(new FileReader(Resetter.configFile));
 
             return gson.fromJson(reader, Config.class);
         } catch(FileNotFoundException e) {

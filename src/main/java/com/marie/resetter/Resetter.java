@@ -10,16 +10,14 @@ import java.io.IOException;
 public class Resetter {
     public static Config config;
     public static File configFile = new File("config.json");
-    public static final Logger LOGGER = LogManager.getLogger();
     private static Runtime runtime = Runtime.getRuntime();
     private static Process serverProcess;
     public static void main(String[] args) {
-        LOGGER.info("Starting Co-Op Resetter");
         GUI gui = new GUI();
         if (configFile.exists()) {
             config = config.load();
         } else {
-            config = new DefaultConfig();
+            config = new Config();
         }
     }
 

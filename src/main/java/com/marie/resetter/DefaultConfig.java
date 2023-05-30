@@ -14,7 +14,7 @@ public class DefaultConfig extends Config {
         super(world, serverJar, useSeed, seed, minRam, maxRam);
         try {
             Resetter.configFile.createNewFile();
-            Resetter.LOGGER.info("Config file created");
+//            Resetter.LOGGER.info("Config file created");
 
         } catch (IOException e) {
             e.printStackTrace();

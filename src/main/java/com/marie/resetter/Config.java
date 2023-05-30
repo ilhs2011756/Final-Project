@@ -23,6 +23,15 @@ public class Config {
         this.save();
     }
 
+    public Config() {
+        this.world = new File("C:\\");
+        this.serverJar = new File("C:\\");
+        this.useSeed = false;
+        this.seed = "";
+        this.minRam = 4096;
+        this.maxRam = 4096;
+    }
+
     public File getServerJar() {
         return this.serverJar;
     }
@@ -74,10 +83,10 @@ public class Config {
     public void save() {
         try {
             Resetter.configFile.createNewFile();
-            Resetter.LOGGER.info("Config file created");
+//            Resetter.LOGGER.info("Config file created");
 
             // Write config to file
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            Gson gson = new GsonBuilder().registerTypeAdapter(Config.class, new Config()).setPrettyPrinting().create();
             BufferedWriter writer = new BufferedWriter(new FileWriter(Resetter.configFile));
             String json = gson.toJson(this);
             writer.write(json);

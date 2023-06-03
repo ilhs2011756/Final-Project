@@ -26,7 +26,7 @@ public class GUI {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-    
+
 //  simple method to toggle the settings screen's visibility
     private void toggleSettings(SettingsScreen settingsScreen) {
         settingsScreen.setVisible(!settingsScreen.isVisible());

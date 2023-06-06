@@ -1,5 +1,5 @@
 plugins {
-//    id 'com.github.johnrengelman.shadow' version '8.1.1' // shadow plugin to build the jar with APIs included
+    id 'com.github.johnrengelman.shadow' version '8.1.1' // shadow plugin to build the jar with APIs included
     id 'java'
     id 'application'
 }
@@ -16,8 +16,6 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     implementation 'commons-io:commons-io:2.12.0' // apache commons IO, used to delete entire directory with one method call
     implementation 'com.google.code.gson:gson:2.10.1' // GSON, used to parse JSON data
-    implementation 'org.apache.logging.log4j:log4j-api:2.20.0' // log4j, logging API with timestamps
-    implementation 'org.apache.logging.log4j:log4j-core:2.20.0' // including these for debug purposes
 }
 
 test {

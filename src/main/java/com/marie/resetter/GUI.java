@@ -2,26 +2,64 @@ package com.marie.resetter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.Objects;
 
 public class GUI {
-    private JFrame frame;
-
+    public static Color brighterGray = Color.GRAY.brighter();
     public GUI() {
 //        create JFrame
-        frame = new JFrame("Minecraft Co-Op Resetter");
-        frame.setSize(500, 400);
+        JFrame frame = new JFrame("Minecraft Co-Op Resetter");
+        frame.setSize(300, 200);
         frame.setLocationRelativeTo(null);
         frame.setLayout(null);
         frame.getContentPane().setBackground(Color.GRAY);
 
+//        initialize settings menu
         SettingsScreen settingsScreen = new SettingsScreen();
 
+//        create button to open the settings menu
         JButton settingsButton =new JButton(new ImageIcon(Objects.requireNonNull(getClass().getResource("/settings_icon.png"))));
-        settingsButton.setBounds(453, 2,30,30);
+        settingsButton.setBounds(252, 2,30,30);
         settingsButton.addActionListener(e -> toggleSettings(settingsScreen));
         settingsButton.setFocusPainted(false);
+        settingsButton.setBackground(brighterGray);
         frame.add(settingsButton);
+
+//        create button to start the server
+        JButton startServerButton = new JButton("Start Server");
+        startServerButton.addActionListener(e -> {
+            try {
+                Resetter.startServer();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        startServerButton.setBounds(2, 54, 200, 50);
+        startServerButton.setFocusPainted(false);
+        startServerButton.setBackground(brighterGray);
+        frame.add(startServerButton);
+
+//        create button to stop the server
+        JButton stopServerButton = new JButton("Stop Server");
+        stopServerButton.addActionListener(e -> Resetter.stopServer());
+        stopServerButton.setBounds(2, 100, 200, 50);
+        stopServerButton.setFocusPainted(false);
+        stopServerButton.setBackground(brighterGray);
+        frame.add(stopServerButton);
+
+        JButton resetButton = new JButton("Reset");
+        resetButton.addActionListener(e -> {
+            try {
+                Resetter.reset();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        resetButton.setBounds(2, 2, 200, 50);
+        resetButton.setFocusPainted(false);
+        resetButton.setBackground(brighterGray);
+        frame.add(resetButton);
 
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

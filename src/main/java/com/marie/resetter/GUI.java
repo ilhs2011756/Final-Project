@@ -9,7 +9,7 @@ public class GUI {
     public static Color brighterGray = Color.GRAY.brighter();
     public GUI() {
 //        create JFrame
-        JFrame frame = new JFrame("Minecraft Co-Op Resetter");
+        JFrame frame = new JFrame("Co-Op Resetter");
         frame.setSize(300, 200);
         frame.setLocationRelativeTo(null);
         frame.setLayout(null);
@@ -19,7 +19,7 @@ public class GUI {
         SettingsScreen settingsScreen = new SettingsScreen();
 
 //        create button to open the settings menu
-        JButton settingsButton =new JButton(new ImageIcon(Objects.requireNonNull(getClass().getResource("/settings_icon.png"))));
+        JButton settingsButton = new JButton(new ImageIcon(Objects.requireNonNull(getClass().getResource("/settings_icon.png"))));
         settingsButton.setBounds(252, 2,30,30);
         settingsButton.addActionListener(e -> toggleSettings(settingsScreen));
         settingsButton.setFocusPainted(false);
@@ -35,7 +35,7 @@ public class GUI {
                 throw new RuntimeException(ex);
             }
         });
-        startServerButton.setBounds(2, 54, 200, 50);
+        startServerButton.setBounds(2, 52, 200, 50);
         startServerButton.setFocusPainted(false);
         startServerButton.setBackground(brighterGray);
         frame.add(startServerButton);

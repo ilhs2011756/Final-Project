@@ -11,12 +11,12 @@ public class Resetter {
     private static final Runtime runtime = Runtime.getRuntime();
     private static Process serverProcess;
     public static void main(String[] args) {
-        GUI gui = new GUI();
         if (configFile.exists()) {
             config = Config.load();
         } else {
             config = new Config();
         }
+        new GUI();
     }
 
     public static void reset() throws IOException {

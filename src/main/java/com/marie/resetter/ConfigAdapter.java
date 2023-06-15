@@ -30,9 +30,16 @@ public class ConfigAdapter extends TypeAdapter<Config> {
 
     @Override
     public Config read(JsonReader in) throws IOException {
-        Config config = new Config();
+        Config config;
         in.beginObject();
         String fieldName = null;
+
+        File world = null;
+        File serverJar = null;
+        boolean useSeed = false;
+        String seed = null;
+        int minRam = 0;
+        int maxRam = 0;
 
         while (in.hasNext()) {
             JsonToken token = in.peek();
@@ -42,30 +49,30 @@ public class ConfigAdapter extends TypeAdapter<Config> {
             }
             if ("world".equals(fieldName)) {
                 token = in.peek();
-                config.setWorld(new File(in.nextString()));
+                world = new File(in.nextString());
             }
             if ("serverJar".equals(fieldName)) {
                 token = in.peek();
-                config.setServerJar(new File(in.nextString()));
+                serverJar = new File(in.nextString());
             }
             if ("useSeed".equals(fieldName)) {
                 token = in.peek();
-                config.setUseSeed(in.nextBoolean());
+                useSeed = in.nextBoolean();
             }
             if ("seed".equals(fieldName)) {
                 token = in.peek();
-                config.setSeed(in.nextString());
+                seed = in.nextString();
             }
             if ("minRam".equals(fieldName)) {
                 token = in.peek();
-                config.setMinRam(in.nextInt());
+                minRam = in.nextInt();
             }
             if ("maxRam".equals(fieldName)) {
                 token = in.peek();
-                config.setMaxRam(in.nextInt());
+                maxRam = in.nextInt();
             }
         }
         in.endObject();
-        return config;
+        return new Config(world, serverJar, useSeed, seed, minRam, maxRam);
     }
 }

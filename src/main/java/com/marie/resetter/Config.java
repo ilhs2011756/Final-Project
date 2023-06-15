@@ -21,6 +21,10 @@ public class Config {
         this.serverJar = serverJar;
         this.useSeed = useSeed;
         this.setSeed(seed);
+
+        if (minRam > maxRam) {
+            throw new IllegalArgumentException("minRam cannot be greater than maxRam");
+        }
         this.minRam = minRam;
         this.maxRam = maxRam;
         this.save();

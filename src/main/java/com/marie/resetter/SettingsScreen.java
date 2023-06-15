@@ -1,7 +1,11 @@
 package com.marie.resetter;
 
 import javax.swing.*;
+import javax.swing.text.TextAction;
+import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
+import java.io.File;
+
 import static com.marie.resetter.GUI.brighterGray;
 import static com.marie.resetter.Resetter.config;
 
@@ -31,6 +35,11 @@ public class SettingsScreen extends JFrame {
         JTextField worldField = new JTextField(config.getWorld().toString());
         worldField.setBounds(42, 2, 200, 13);
         worldField.setBorder(BorderFactory.createEmptyBorder());
+        System.out.println(worldField.getText());
+        worldField.addActionListener(e -> {
+//            config.setWorld(new File((JTextField)e.getSource());
+        });
+        worldField.addPropertyChangeListener();
         this.add(worldField);
 
 //        option to set server jar path

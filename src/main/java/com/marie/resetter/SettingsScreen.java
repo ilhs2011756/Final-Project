@@ -3,16 +3,11 @@ package com.marie.resetter;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.TextAction;
-import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.io.File;
 
 import static com.marie.resetter.GUI.brighterGray;
 import static com.marie.resetter.Resetter.config;
-
 import static java.awt.Color.GRAY;
 
 public class SettingsScreen extends JFrame {

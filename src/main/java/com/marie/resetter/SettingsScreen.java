@@ -1,9 +1,13 @@
 package com.marie.resetter;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.text.TextAction;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.File;
 
 import static com.marie.resetter.GUI.brighterGray;
@@ -33,13 +37,24 @@ public class SettingsScreen extends JFrame {
         worldLabel.setBounds(2, 2, 40, 10);
         this.add(worldLabel);
         JTextField worldField = new JTextField(config.getWorld().toString());
-        worldField.setBounds(42, 2, 200, 13);
+        worldField.setBounds(42, 2, 300, 13);
         worldField.setBorder(BorderFactory.createEmptyBorder());
-        System.out.println(worldField.getText());
-        worldField.addActionListener(e -> {
-//            config.setWorld(new File((JTextField)e.getSource());
+        worldField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                config.setWorld(new File(worldField.getText()));
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                config.setWorld(new File(worldField.getText()));
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                config.setWorld(new File(worldField.getText()));
+            }
         });
-        worldField.addPropertyChangeListener();
         this.add(worldField);
 
 //        option to set server jar path
@@ -47,8 +62,24 @@ public class SettingsScreen extends JFrame {
         jarLabel.setBounds(2, 30, 70, 15);
         this.add(jarLabel);
         JTextField jarField = new JTextField(config.getServerJar().toString());
-        jarField.setBounds(72, 30, 200, 13);
+        jarField.setBounds(72, 30, 300, 13);
         jarField.setBorder(BorderFactory.createEmptyBorder());
+        jarField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                config.setServerJar(new File(jarField.getText()));
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                config.setServerJar(new File(jarField.getText()));
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                config.setServerJar(new File(jarField.getText()));
+            }
+        });
         this.add(jarField);
 
 //        option to change the seed if useSeed is true
@@ -59,6 +90,22 @@ public class SettingsScreen extends JFrame {
         seedField.setBounds(43, 110, 200, 15);
         seedField.setBorder(BorderFactory.createEmptyBorder());
         seedField.setFocusable(config.isUseSeed());
+        seedField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                config.setSeed(seedField.getText());
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                config.setSeed(seedField.getText());
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                config.setSeed(seedField.getText());
+            }
+        });
         this.add(seedField);
 
 //        option to change useSeed
@@ -66,6 +113,7 @@ public class SettingsScreen extends JFrame {
         useSeedButton.setBounds(2, 70, 85, 15);
         useSeedButton.addItemListener(e -> {
             config.setUseSeed(e.getStateChange() == ItemEvent.SELECTED);
+            config.setSeed(e.getStateChange() == ItemEvent.SELECTED ? seedField.getText() : "");
             seedField.setFocusable(e.getStateChange() == ItemEvent.SELECTED);
         });
         useSeedButton.setFocusPainted(false);
@@ -79,6 +127,22 @@ public class SettingsScreen extends JFrame {
         JTextField minRamField = new JTextField(String.valueOf(config.getMinRam()));
         minRamField.setBounds(65, 150, 200, 15);
         minRamField.setBorder(BorderFactory.createEmptyBorder());
+        minRamField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                config.setMinRam(Integer.parseInt(minRamField.getText()));
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                config.setMinRam(Integer.parseInt(minRamField.getText()));
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                config.setMinRam(Integer.parseInt(minRamField.getText()));
+            }
+        });
         this.add(minRamField);
 
 //        option to change maxRam
@@ -88,9 +152,26 @@ public class SettingsScreen extends JFrame {
         JTextField maxRamField = new JTextField(String.valueOf(config.getMaxRam()));
         maxRamField.setBounds(70, 190, 200, 15);
         maxRamField.setBorder(BorderFactory.createEmptyBorder());
+        maxRamField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                config.setMaxRam(Integer.parseInt(maxRamField.getText()));
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                config.setMaxRam(Integer.parseInt(maxRamField.getText()));
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                config.setMaxRam(Integer.parseInt(maxRamField.getText()));
+            }
+        });
         this.add(maxRamField);
     }
 
+//    closes the settings ui and saves the settings
     private void close() {
         config.save();
         this.setVisible(false);

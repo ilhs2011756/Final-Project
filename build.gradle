@@ -1,5 +1,5 @@
 plugins {
-//    id 'com.github.johnrengelman.shadow' version '8.1.1' // shadow plugin to build the jar with APIs included
+    id 'com.github.johnrengelman.shadow' version '8.1.1' // shadow plugin to build the jar with APIs included
     id 'java'
     id 'application'
 }

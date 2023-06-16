@@ -2,11 +2,11 @@ package com.marie.resetter;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 import java.util.Properties;
 
+// config stuff yeah
 public class Config {
     private File world;
     private File serverJar;
@@ -16,20 +16,22 @@ public class Config {
     private int maxRam;
     private static final Gson gson = new GsonBuilder().registerTypeAdapter(Config.class, new ConfigAdapter()).setPrettyPrinting().create();
 
+//    constructor for specific config
     public Config(File world, File serverJar, boolean useSeed, String seed, int minRam, int maxRam) {
         this.world = world;
         this.serverJar = serverJar;
         this.useSeed = useSeed;
         this.setSeed(seed);
 
-        if (minRam > maxRam) {
-            throw new IllegalArgumentException("minRam cannot be greater than maxRam");
-        }
         this.minRam = minRam;
         this.maxRam = maxRam;
+        if (this.minRam > this.maxRam) {
+            throw new IllegalArgumentException("minRam cannot be greater than maxRam");
+        }
         this.save();
     }
 
+//    constructor for default config
     public Config() {
         this.world = new File("C:\\");
         this.serverJar = new File("C:\\");
@@ -40,6 +42,7 @@ public class Config {
         this.save();
     }
 
+//    these are all getters and setters theres nothing special about them
     public File getServerJar() {
         return this.serverJar;
     }
@@ -76,6 +79,7 @@ public class Config {
         this.useSeed = useSeed;
     }
 
+//    updates the server.properties file seed property
     public void setSeed(String seed) {
         if (this.useSeed) {
             try {
@@ -103,6 +107,7 @@ public class Config {
         this.maxRam = maxRam;
     }
 
+//    writes the options to the config file
     public void save() {
         try {
             Resetter.configFile.createNewFile();
@@ -117,6 +122,7 @@ public class Config {
         }
     }
 
+//    reads the config from the file
     public static Config load() {
         try {
             // Read the config from the json file

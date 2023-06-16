@@ -8,8 +8,10 @@ import com.google.gson.stream.JsonWriter;
 import java.io.File;
 import java.io.IOException;
 
+// custom TypeAdapter for this program, for whatever reason it didn't work with the default one
 public class ConfigAdapter extends TypeAdapter<Config> {
 
+//    parses the data to json
     @Override
     public void write(JsonWriter out, Config config) throws IOException {
         out.beginObject();
@@ -28,6 +30,7 @@ public class ConfigAdapter extends TypeAdapter<Config> {
         out.endObject();
     }
 
+//    parses the data from json
     @Override
     public Config read(JsonReader in) throws IOException {
         Config config;

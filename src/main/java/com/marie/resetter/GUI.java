@@ -7,6 +7,8 @@ import java.util.Objects;
 
 public class GUI {
     public static Color brighterGray = Color.GRAY.brighter();
+
+//    creates the main gui and all its elements
     public GUI() {
 //        create JFrame
         JFrame frame = new JFrame("Co-Op Resetter");
